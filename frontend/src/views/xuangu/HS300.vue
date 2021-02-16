@@ -1,111 +1,100 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    :items-per-page="5"
-    class="elevation-1"
-  ></v-data-table>
+  <v-container fluid>
+    <v-row>
+      <v-col>
+        <v-btn
+          block
+          color="primary"
+          @click="handleSync"
+        >
+          同步
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-data-table
+          class="elevation-1"
+          :headers="headers"
+          fixed-header
+          :items="datasets"
+          :page.sync="page"
+          :items-per-page.sync="pageSize"
+          :server-items-length.sync="itemsLength"
+          :footer-props="footerProps"
+          :height="height"
+          :loading="loading"
+          @pagination="handlePagination"
+        ></v-data-table>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import { getHS300Stocks, postHS300Stocks } from '@/api/xuangu/hs300'
+
 export default {
   data () {
     return {
       headers: [
         {
-          text: 'Dessert (100g serving)',
+          text: '股票代码',
           align: 'start',
           sortable: false,
-          value: 'name'
+          value: 'code'
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' }
+        { text: '股票名称', sortable: false, value: 'name' },
+        { text: '更新日期', sortable: false, value: 'update_date' },
+        { text: '同步时间', sortable: false, value: 'sync_time' }
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
-        }
-      ]
+      datasets: [],
+      footerProps: {
+        itemsPerPageOptions: [15, 30, 45, -1],
+        showCurrentPage: true,
+        showFirstLastPage: true
+      },
+      page: 1,
+      pageSize: 15,
+      itemsLength: 300,
+      loading: false
+    }
+  },
+  mounted () {
+    this.setDataSets()
+  },
+  computed: {
+    height: function () {
+      return document.documentElement.clientHeight - 255
+    }
+  },
+  methods: {
+    setDataSets () {
+      this.loading = true
+      const query = {
+        page: this.page,
+        page_size: this.pageSize
+      }
+      getHS300Stocks(query
+      ).then(response => {
+        this.datasets = response.data.records
+        this.itemsLength = response.data.total
+      }).catch(error => {
+        console.log(error)
+      })
+      this.loading = false
+    },
+    handlePagination (pagination) {
+      this.setDataSets()
+    },
+    handleSync () {
+      postHS300Stocks({}
+      ).then(response => {
+        this.page = 1
+        this.setDataSets()
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

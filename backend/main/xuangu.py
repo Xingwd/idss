@@ -4,22 +4,29 @@ from flask import Blueprint, request, jsonify
 from main.db import get_db
 
 bp = Blueprint('xuangu', __name__)
+TABLE_NAME = 'hs300_stocks'
 
 
 # 另一种api写法：https://dormousehole.readthedocs.io/en/latest/views.html#api
-@bp.route('/hs300/stocks', methods=['GET'])
+@bp.route('/hs300', methods=['GET'])
 def get_hs300_stocks():
     page = request.args.get('page', 1, type=int)
     page_size = request.args.get('page_size', 30, type=int)
-    data = []
+    data = {}
     cursor = get_db().cursor()
-    sql = 'select * from hs300_stocks limit %s,%s'
-    cursor.execute(sql, ((page - 1) * page_size, page_size))
-    data = cursor.fetchall()
+    total = 'select count(*) as total from {}'.format(TABLE_NAME)
+    cursor.execute(total)
+    data['total'] = cursor.fetchone()['total']
+    if page_size == -1:
+        page = 1
+        page_size = data['total']
+    records = 'select * from {} limit %s,%s'.format(TABLE_NAME)
+    cursor.execute(records, ((page - 1) * page_size, page_size))
+    data['records'] = cursor.fetchall()
     return jsonify(data)
 
 
-@bp.route('/hs300/stocks', methods=['POST'])
+@bp.route('/hs300', methods=['POST'])
 def update_hs300_stocks():
     # 登录baostock
     bs.login()

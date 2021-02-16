@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from flask import Flask, make_response, jsonify
-# from flask_cors import CORS
+from flask_cors import CORS
 # from logging.config import dictConfig
 from config import Config
 
@@ -27,7 +27,7 @@ def create_app(config=Config):
     app = Flask(__name__)
     app.config.from_object(config)
 
-    # CORS(app)
+    CORS(app)
 
     # https://dormousehole.readthedocs.io/en/latest/api.html#flask.Flask.errorhandler
     # https://dormousehole.readthedocs.io/en/latest/errorhandling.html#error-handlers

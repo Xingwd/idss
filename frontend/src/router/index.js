@@ -16,7 +16,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "xuangu" */ '../views/xuangu/XuanGu.vue'),
     children: [
       {
-        path: '/hs300',
+        path: 'hs300',
         name: 'hs300',
         component: () => import(/* webpackChunkName: "xuangu" */ '../views/xuangu/HS300.vue')
       }

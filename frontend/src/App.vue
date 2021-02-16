@@ -4,45 +4,50 @@
       v-model="drawer"
       app
       clipped
-      expand-on-hover
       floating
-      style="max-width: 200px"
     >
       <v-list dense>
         <v-list-item
           link
           to="/"
         >
-          <v-list-item-action>
+          <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>自选</v-list-item-title>
-          </v-list-item-content>
+          </v-list-item-icon>
+          <v-list-item-title>自选</v-list-item-title>
         </v-list-item>
-        <v-list-item
-          link
-          to="/xuangu"
+        <v-list-group
+          :value="true"
+          prepend-icon="mdi-account-circle"
+          no-action
         >
-          <v-list-item-action>
-            <v-icon>mdi-feather</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
+          <template v-slot:activator>
             <v-list-item-title>选股</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          </template>
+
+          <v-list-item
+            v-for="([title, icon, to], i) in xuangus"
+            :key="i"
+            link
+            :to="to"
+          >
+            <v-list-item-title v-text="title"></v-list-item-title>
+            <v-list-item-icon>
+              <v-icon v-text="icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
       app
       clipped-left
-      color="white"
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>SEER</v-toolbar-title>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <!-- <v-toolbar-title>SEER</v-toolbar-title> -->
     </v-app-bar>
     <v-main>
-      <router-view />
+      <router-view></router-view>
     </v-main>
     <v-footer
       app
@@ -62,7 +67,10 @@
 <script>
 export default {
   data: () => ({
-    drawer: true
+    drawer: true,
+    xuangus: [
+      ['沪深300', 'mdi-plus-outline', '/xuangu/hs300']
+    ]
   })
 }
 </script>
