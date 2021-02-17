@@ -14,7 +14,7 @@
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>自选</v-list-item-title>
+          <v-list-item-title>主页</v-list-item-title>
         </v-list-item>
         <v-list-group
           :value="true"
@@ -26,7 +26,28 @@
           </template>
 
           <v-list-item
-            v-for="([title, icon, to], i) in xuangus"
+            v-for="([title, icon, to], i) in choice"
+            :key="i"
+            link
+            :to="to"
+          >
+            <v-list-item-title v-text="title"></v-list-item-title>
+            <v-list-item-icon>
+              <v-icon v-text="icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-group>
+        <v-list-group
+          :value="true"
+          prepend-icon="mdi-account-circle"
+          no-action
+        >
+          <template v-slot:activator>
+            <v-list-item-title>股票</v-list-item-title>
+          </template>
+
+          <v-list-item
+            v-for="([title, icon, to], i) in stocks"
             :key="i"
             link
             :to="to"
@@ -68,8 +89,12 @@
 export default {
   data: () => ({
     drawer: true,
-    xuangus: [
-      ['沪深300', 'mdi-plus-outline', '/xuangu/hs300']
+    choice: [
+      ['沪深300', 'mdi-plus-outline', '/choice/hs300']
+    ],
+    stocks: [
+      ['关注', 'mdi-plus-outline', '/stocks/focus'],
+      ['股票池', 'mdi-plus-outline', '/stocks/pool']
     ]
   })
 }

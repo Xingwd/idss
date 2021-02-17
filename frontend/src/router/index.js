@@ -11,14 +11,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/xuangu',
+    path: '/choice',
     redirect: { name: 'hs300' },
-    component: () => import(/* webpackChunkName: "xuangu" */ '../views/xuangu/XuanGu.vue'),
+    component: () => import(/* webpackChunkName: "choice" */ '../views/choice/Choice.vue'),
     children: [
       {
         path: 'hs300',
         name: 'hs300',
-        component: () => import(/* webpackChunkName: "xuangu" */ '../views/xuangu/HS300.vue')
+        component: () => import(/* webpackChunkName: "choice" */ '../views/choice/HS300.vue')
       }
     ]
   },

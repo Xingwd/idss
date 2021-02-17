@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getHS300Stocks, postHS300Stocks } from '@/api/xuangu/hs300'
+import { getHS300Stocks, postHS300Stocks } from '@/api/choice/hs300'
 
 export default {
   data () {

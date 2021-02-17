@@ -47,7 +47,7 @@ def create_app(config=Config):
     # Blueprint
     from .stocks import bp as stocks_bp
     app.register_blueprint(stocks_bp, url_prefix='/api/stocks')
-    from .xuangu import bp as xuangu_bp
-    app.register_blueprint(xuangu_bp, url_prefix='/api/xuangu')
+    from .choice import bp as choice_bp
+    app.register_blueprint(choice_bp, url_prefix='/api/choice')
 
     return app

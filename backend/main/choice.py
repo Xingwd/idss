@@ -3,7 +3,7 @@ import baostock as bs
 from flask import Blueprint, request, jsonify
 from main.db import get_db
 
-bp = Blueprint('xuangu', __name__)
+bp = Blueprint('choice', __name__)
 TABLE_NAME = 'hs300_stocks'
 
 
