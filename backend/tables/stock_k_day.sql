@@ -1,6 +1,6 @@
 
-DROP TABLE IF EXISTS stocks;
-CREATE TABLE IF NOT EXISTS stocks(
+DROP TABLE IF EXISTS stock_k_day;
+CREATE TABLE IF NOT EXISTS stock_k_day(
    code VARCHAR(10) NOT NULL COMMENT '股票代码',
    date VARCHAR(10) COMMENT '交易日期',
    open FLOAT COMMENT '开盘价',

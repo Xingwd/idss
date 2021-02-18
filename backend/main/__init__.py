@@ -45,9 +45,11 @@ def create_app(config=Config):
         return 'Hello, World!'
 
     # Blueprint
-    from .stocks import bp as stocks_bp
-    app.register_blueprint(stocks_bp, url_prefix='/api/stocks')
-    from .choice import bp as choice_bp
-    app.register_blueprint(choice_bp, url_prefix='/api/choice')
+    from .stock_k import bp as stock_k_bp
+    app.register_blueprint(stock_k_bp, url_prefix='/api/stock/k')
+    from .stock_index_component import bp as stock_index_component_bp
+    app.register_blueprint(stock_index_component_bp, url_prefix='/api/stock/index_component')
+    from .stock_choice import bp as stock_choice_bp
+    app.register_blueprint(stock_choice_bp, url_prefix='/api/stock/choice')
 
     return app

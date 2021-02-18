@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getHS300Stocks, postHS300Stocks } from '@/api/choice/hs300'
+import { getIndexComponentHS300, postIndexComponentHS300 } from '@/api/stock/index_component/hs300'
 
 export default {
   data () {
@@ -45,7 +45,6 @@ export default {
           value: 'code'
         },
         { text: '股票名称', sortable: false, value: 'name' },
-        { text: '更新日期', sortable: false, value: 'update_date' },
         { text: '同步时间', sortable: false, value: 'sync_time' }
       ],
       datasets: [],
@@ -75,7 +74,7 @@ export default {
         page: this.page,
         page_size: this.pageSize
       }
-      getHS300Stocks(query
+      getIndexComponentHS300(query
       ).then(response => {
         this.datasets = response.data.records
         this.itemsLength = response.data.total
@@ -88,7 +87,7 @@ export default {
       this.setDataSets()
     },
     handleSync () {
-      postHS300Stocks({}
+      postIndexComponentHS300({}
       ).then(response => {
         this.page = 1
         this.setDataSets()

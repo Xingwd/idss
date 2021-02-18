@@ -3,7 +3,7 @@ import baostock as bs
 from flask import Blueprint, request, jsonify
 from main.db import get_db
 
-bp = Blueprint('stocks', __name__)
+bp = Blueprint('stock_k', __name__)
 
 cols = ','.join(['code', 'date', 'open', 'high', 'low', 'close', 'preclose', 'volume', 'amount', 'adjustflag', 'turn',
                  'tradestatus', 'pctChg', 'peTTM', 'psTTM', 'pcfNcfTTM', 'pbMRQ', 'isST'])

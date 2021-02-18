@@ -11,14 +11,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/choice',
+    path: '/stock/index_component',
     redirect: { name: 'hs300' },
-    component: () => import(/* webpackChunkName: "choice" */ '../views/choice/Choice.vue'),
+    component: () => import(/* webpackChunkName: "stock_index_component" */ '../views/stock/index_component/IndexComponent.vue'),
     children: [
       {
+        path: 'sh50',
+        name: 'SH50',
+        component: () => import(/* webpackChunkName: "stock_index_component" */ '../views/stock/index_component/SH50.vue')
+      },
+      {
         path: 'hs300',
-        name: 'hs300',
-        component: () => import(/* webpackChunkName: "choice" */ '../views/choice/HS300.vue')
+        name: 'HS300',
+        component: () => import(/* webpackChunkName: "stock_index_component" */ '../views/stock/index_component/HS300.vue')
       }
     ]
   },
