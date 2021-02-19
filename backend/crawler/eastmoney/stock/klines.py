@@ -25,6 +25,10 @@ import requests
 # 获取k线数据
 def get_klines(secid, klt=101, fqt=0, beg=0, end=20500000, fields1='f1,f2,f3,f4,f5,f6,f7,f8',
                fields2='f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61'):
+    # 添加证券交易所前缀
+    # 1. 代表上证
+    # 0. 代表深证
+    secid = '1.' + secid if secid[0] == '6' else '0.' + secid
     params = {
         'secid': secid,
         'klt': klt,

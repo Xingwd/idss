@@ -8,7 +8,7 @@ class Overview(db.Model):
     name = db.Column(db.String(50), comment='股票名称')
 
     def __repr__(self):
-        return '<Stock {}[{}]>'.format(self.name, self.code)
+        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
 
 
 class KLinesDay(db.Model):
@@ -27,7 +27,7 @@ class KLinesDay(db.Model):
     turn = db.Column(db.String(8), comment='换手率')
 
     def __repr__(self):
-        return '<Stock {} {}>'.format(self.code, self.date)
+        return '<{}(code={}, date={})>'.format(self.__class__.__name__, self.code, self.date)
 
 
 class IndexComponentSH50(db.Model):
@@ -38,7 +38,7 @@ class IndexComponentSH50(db.Model):
     sync_time = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def __repr__(self):
-        return '<Stock {}[{}]>'.format(self.name, self.code)
+        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
 
 
 class IndexComponentHS300(db.Model):
@@ -49,7 +49,7 @@ class IndexComponentHS300(db.Model):
     sync_time = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def __repr__(self):
-        return '<Stock {}[{}]>'.format(self.name, self.code)
+        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
 
 # schemas迁移工具
 # https://docs.sqlalchemy.org/en/13/core/metadata.html#altering-schemas-through-migrations
