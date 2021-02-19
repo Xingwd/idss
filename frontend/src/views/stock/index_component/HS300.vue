@@ -38,12 +38,8 @@ export default {
   data () {
     return {
       headers: [
-        {
-          text: '股票代码',
-          align: 'start',
-          sortable: false,
-          value: 'code'
-        },
+        { text: 'ID', align: 'start', sortable: false, value: 'id' },
+        { text: '股票代码', align: 'start', sortable: false, value: 'code' },
         { text: '股票名称', sortable: false, value: 'name' },
         { text: '同步时间', sortable: false, value: 'sync_time' }
       ],
@@ -76,7 +72,8 @@ export default {
       }
       getIndexComponentHS300(query
       ).then(response => {
-        this.datasets = response.data.records
+        this.datasets = response.data.items
+        console.log(this.datasets)
         this.itemsLength = response.data.total
       }).catch(error => {
         console.log(error)

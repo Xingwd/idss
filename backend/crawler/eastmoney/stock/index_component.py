@@ -14,7 +14,7 @@ f14=名称,f15=最高,f16=最低,f17=今开,f18=昨收,f20,f21,f23=市净率,f24
 import requests
 
 
-# 获取新浪财经指数最新成分股
+# 获取指数成分股
 def get_index_component(pn=1, fields='f12,f14', **kwargs):
     url = 'http://push2.eastmoney.com/api/qt/clist/get?pn={}&fields={}&{}'.format(
         pn, fields, '&'.join(['{}={}'.format(k, v) for k, v in kwargs.items()]))

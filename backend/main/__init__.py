@@ -1,8 +1,11 @@
 # -*- coding: UTF-8 -*-
 from flask import Flask, make_response, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 # from logging.config import dictConfig
 from config import Config
+
+db = SQLAlchemy()
 
 
 def create_app(config=Config):
@@ -27,6 +30,7 @@ def create_app(config=Config):
     app = Flask(__name__)
     app.config.from_object(config)
 
+    db.init_app(app)
     CORS(app)
 
     # https://dormousehole.readthedocs.io/en/latest/api.html#flask.Flask.errorhandler
@@ -45,8 +49,8 @@ def create_app(config=Config):
         return 'Hello, World!'
 
     # Blueprint
-    from .stock_k import bp as stock_k_bp
-    app.register_blueprint(stock_k_bp, url_prefix='/api/stock/k')
+    from .stock_klines import bp as stock_klines_bp
+    app.register_blueprint(stock_klines_bp, url_prefix='/api/stock/klines')
     from .stock_index_component import bp as stock_index_component_bp
     app.register_blueprint(stock_index_component_bp, url_prefix='/api/stock/index_component')
     from .stock_choice import bp as stock_choice_bp
