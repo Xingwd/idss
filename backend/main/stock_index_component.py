@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from datetime import datetime
 from flask import Blueprint, request, jsonify
 from main import db
 from main.models.stock import IndexComponentSH50, IndexComponentHS300
