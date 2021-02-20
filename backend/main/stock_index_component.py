@@ -22,7 +22,6 @@ def get_pagination(model, page, page_size):
         data['pages'] = pagination.pages
         data['per_page'] = pagination.per_page
         data['total'] = pagination.total
-        print(data['items'])
     return data
 
 

@@ -2,17 +2,6 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        <v-btn
-          block
-          color="primary"
-          @click="handleSync"
-        >
-          同步
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
         <v-data-table
           class="elevation-1"
           :headers="headers"
@@ -25,7 +14,45 @@
           :height="height"
           :loading="loading"
           @pagination="handlePagination"
-        ></v-data-table>
+        >
+          <template v-slot:top>
+            <v-toolbar
+              flat
+            >
+              <v-toolbar-title>上证50成分股</v-toolbar-title>
+              <v-divider
+                class="mx-4"
+                inset
+                vertical
+              ></v-divider>
+              <v-spacer></v-spacer>
+              <template>
+                <v-btn
+                  color="primary"
+                  class="mb-2"
+                  @click="handleSync"
+                >
+                  同步
+                </v-btn>
+              </template>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.stock_overview="{ item }">
+            <a
+              small
+              class="mr-2"
+              @click="linkToStockData(item)"
+            >
+              数据
+            </a>
+            <a
+              small
+              @click="linkToZJLX(item)"
+            >
+              资金流向
+            </a>
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
   </v-container>
@@ -41,7 +68,8 @@ export default {
         { text: 'ID', align: 'start', sortable: false, value: 'id' },
         { text: '股票代码', align: 'start', sortable: false, value: 'code' },
         { text: '股票名称', sortable: false, value: 'name' },
-        { text: '同步时间', sortable: false, value: 'sync_time' }
+        { text: '同步时间', sortable: false, value: 'sync_time' },
+        { text: '个股概况(东方财富网)', value: 'stock_overview', sortable: false }
       ],
       datasets: [],
       footerProps: {
@@ -60,7 +88,7 @@ export default {
   },
   computed: {
     height: function () {
-      return document.documentElement.clientHeight - 255
+      return document.documentElement.clientHeight - 259
     }
   },
   methods: {
@@ -90,6 +118,14 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    linkToStockData (item) {
+      const url = 'http://data.eastmoney.com/stockdata/{}.html'.replace('{}', item.code)
+      window.open(url)
+    },
+    linkToZJLX (item) {
+      const url = 'http://data.eastmoney.com/zjlx/{}.html'.replace('{}', item.code)
+      window.open(url)
     }
   }
 }
