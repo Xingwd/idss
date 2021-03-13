@@ -1,2 +1,2 @@
-# seer
-量化交易
+# IDSS
+投资决策辅助系统(Investment decision support system)
