@@ -6,9 +6,11 @@ class Overview(db.Model):
     __tablename__ = 'overview'
     code = db.Column(db.String(20), primary_key=True, comment='股票代码')
     name = db.Column(db.String(50), comment='股票名称')
+    plate = db.Column(db.String(500), comment='所属板块')
+    business_scope = db.Column(db.String(8000), comment='经营范围')
 
     def __repr__(self):
-        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
+        return f'<{self.__class__.__name__}(code={self.code}, name={self.name})>'
 
 
 class KLinesDay(db.Model):
@@ -27,29 +29,24 @@ class KLinesDay(db.Model):
     turn = db.Column(db.String(8), comment='换手率')
 
     def __repr__(self):
-        return '<{}(code={}, date={})>'.format(self.__class__.__name__, self.code, self.date)
+        return f'<{self.__class__.__name__}(code={self.code}, date={self.date})>'
 
 
 class IndexComponentSH50(db.Model):
     __tablename__ = 'index_compnent_sh50'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     code = db.Column(db.String(20))
-    name = db.Column(db.String(50))
     sync_time = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def __repr__(self):
-        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
+        return f'<{self.__class__.__name__}(code={self.code})>'
 
 
 class IndexComponentHS300(db.Model):
     __tablename__ = 'index_compnent_hs300'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     code = db.Column(db.String(20))
-    name = db.Column(db.String(50))
     sync_time = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def __repr__(self):
-        return '<{}(code={}, name={})>'.format(self.__class__.__name__, self.code, self.name)
-
-# schemas迁移工具
-# https://docs.sqlalchemy.org/en/13/core/metadata.html#altering-schemas-through-migrations
+        return f'<{self.__class__.__name__}(code={self.code})>'

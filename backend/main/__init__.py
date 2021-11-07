@@ -49,6 +49,8 @@ def create_app(config=Config):
         return 'Hello, World!'
 
     # Blueprint
+    from .stock_overview import bp as stock_overview_bp
+    app.register_blueprint(stock_overview_bp, url_prefix='/api/stock/overview')
     from .stock_klines import bp as stock_klines_bp
     app.register_blueprint(stock_klines_bp, url_prefix='/api/stock/klines')
     from .stock_index_component import bp as stock_index_component_bp
