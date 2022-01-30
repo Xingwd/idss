@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  db:
+    env_file: docker/.env-non-dev
+    image: postgres:14.1
+    container_name: idss_db
+    restart: unless-stopped
+    volumes:
+      - db_home:/var/lib/postgresql/data
+
+  idss-backend:
+    env_file: docker/.env-non-dev
+    image: *superset-image
+    container_name: superset_app
+    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
+    user: "root"
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    depends_on: *superset-depends-on
+    volumes: *superset-volumes
+
+  idss-frontend:
+    image: *superset-image
+    container_name: superset_init
+    command: ["/app/docker/docker-init.sh"]
+    env_file: docker/.env-non-dev
+    depends_on: *superset-depends-on
+    user: "root"
+    volumes: *superset-volumes
+
+volumes:
+  db_home:
+    external: false
